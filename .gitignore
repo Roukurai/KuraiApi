@@ -1,0 +1,23 @@
+# virtual environment
+.venv/
+
+# compiled Python files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# package metadata
+*.egg-info/
+dist/
+build/
+
+# log files
+*.log
+
+# SQLite database files
+*.sqlite3
+
+# environment-specific configuration
+.env
