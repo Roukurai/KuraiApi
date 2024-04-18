@@ -68,10 +68,14 @@ async def get_users(limit: int | None=None):
     else:
         return {"users": users_list}
 
+@app.post('/user/create')
+async def create_user(user: User):
+    return user
+
 @app.get('/user/{user_id}')
 async def get_user(user_id: int):
     return {"username":"johndoe","uuid":user_id}
 
-@app.post('/user/create')
-async def create_user(user: User):
-    return user
+@app.post('/blogsite/add')
+async def create_blogpost(title: str, body: str, ):
+    return {"message":"Success"}
