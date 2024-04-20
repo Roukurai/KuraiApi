@@ -12,6 +12,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 import requests
 
+<<<<<<< HEAD
 # APP Setup
 app = FastAPI()
 app.include_router(minecraft.router,prefix="/minecraft")
@@ -25,6 +26,23 @@ app.include_router(al.router,prefix="/al")
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
+=======
+import configparser
+import os
+import re
+
+ini = os.path.join(os.path.dirname(__file__),"data",".config")
+config = configparser.ConfigParser()
+config.read(ini)
+config_values= {}
+
+for section in config.sections():
+  config_values[section]={}
+  for option in config.options(section):
+    config_values[section][option]= config.get(section,option) 
+    
+
+>>>>>>> 7ef66f8 (configparser /data /models)
 
 class User(BaseModel):
     id: int
@@ -50,7 +68,8 @@ class UserDB(Base):
     updated_at = Column(DateTime,default=datetime.now())
     updated_by = Column(String)
 
-DATABASE_URL = "postgresql://roukurai:Sama4CA2@192.168.196.13/kuraitachi"
+# Database setup ##############################################################################################
+DATABASE_URL = config_values['database']['database_url']
 engine = create_engine(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 metadata.reflect(bind=engine)
@@ -58,12 +77,12 @@ metadata.reflect(bind=engine)
 database = databases.Database(DATABASE_URL)
 
 
+<<<<<<< HEAD
+=======
+# API Setup ##################################################################################################
+app = FastAPI()
+>>>>>>> 7ef66f8 (configparser /data /models)
 
-users_list = [
-    {"username": "johndoe", "first_name": "John", "last_name": "Doe", "id": 1},
-    {"username": "janedoe", "first_name": "Jane", "last_name": "Doe", "id": 2},
-    {"username": "jimdoe", "first_name": "Jim", "last_name": "Doe", "id": 3}
-]
 
 @app.get('/')
 async def root():
@@ -101,3 +120,4 @@ async def get_user(user_id: int):
 @app.post('/blogsite/add')
 async def create_blogpost(title: str, body: str, ):
     return {"message":"Success"}
+

@@ -21,3 +21,4 @@ build/
 
 # environment-specific configuration
 .env
+.config
