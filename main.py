@@ -1,4 +1,6 @@
 from fastapi import FastAPI
+from apis import minecraft, wabisabi,kuraiorg,al
+
 from pydantic import BaseModel
 from typing import Optional
 from datetime import datetime
@@ -10,6 +12,19 @@ from sqlalchemy.ext.declarative import declarative_base
 
 import requests
 
+# APP Setup
+app = FastAPI()
+app.include_router(minecraft.router,prefix="/minecraft")
+app.include_router(wabisabi.router,prefix="/wabisabi")
+app.include_router(kuraiorg.router,prefix="/kuraiorg")
+app.include_router(al.router,prefix="/al")
+
+#templates replace <route>
+# app.include_router(<route>.router,prefix="/<route>")
+# app.include_router(<route>.router,prefix="/<route>")
+# app.include_router(<route>.router,prefix="/<route>")
+# app.include_router(<route>.router,prefix="/<route>")
+# app.include_router(<route>.router,prefix="/<route>")
 
 class User(BaseModel):
     id: int
@@ -43,7 +58,6 @@ metadata.reflect(bind=engine)
 database = databases.Database(DATABASE_URL)
 
 
-app = FastAPI()
 
 users_list = [
     {"username": "johndoe", "first_name": "John", "last_name": "Doe", "id": 1},
@@ -53,7 +67,15 @@ users_list = [
 
 @app.get('/')
 async def root():
-    return {"message":"Welcome estranged traveler"}
+    endpoints=[]
+    for route in app.routes:
+        endpoint_info = {
+            "path": route.path,
+            "method": route.methods,
+            "name": route.name,
+        }
+        endpoints.append(endpoint_info)
+    return {"message":"Welcome estranged traveler","endpoints":endpoints}
 
 @app.get('/ping')
 async def ping():
