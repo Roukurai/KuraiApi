@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from models.minecraft_item import Item
+from fastapi import APIRouter,HTTPException
+from models.minecraft_item import Item,ItemDB
+from modules.database import SessionLocal
 
 router = APIRouter()
 
@@ -22,5 +23,15 @@ async def get_inventory():
 
 @router.post('/inventory/add_item')
 async def inventory_add_item(item:Item):
+    db = SessionLocal()
+    minecraft_item = ItemDB(**item.dict())
+    db.add(minecraft_item)
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, details=str(e))
+    finally:
+        db.close()
     
     return {"message":"Item added Successfully","item_name":item.name,"item_id":item.id,"item_data":item}

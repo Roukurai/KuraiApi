@@ -29,7 +29,6 @@ app.include_router(al.router,prefix="/al")
 # app.include_router(<route>.router,prefix="/<route>")
 import configparser
 import os
-import re
 
 ini = os.path.join(os.path.dirname(__file__),"data",".config")
 config = configparser.ConfigParser()

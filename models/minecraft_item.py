@@ -1,5 +1,6 @@
 from pydantic import BaseModel,validator
-
+from sqlalchemy import Column,String,Integer
+from modules.database import Base
 
 class Item(BaseModel):
     id: int
@@ -28,3 +29,10 @@ class Item(BaseModel):
         return value
 
 
+class ItemDB(Base):
+    __tablename__ = "minecraft_items"
+    id =Column(Integer, primary_key=True,index= True)
+    name = Column(String,index=True)
+    quantity = Column(Integer)
+    inventory_id = Column(Integer)
+    mod_id = Column(String)
