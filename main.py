@@ -12,9 +12,10 @@ from sqlalchemy.ext.declarative import declarative_base
 
 import requests
 
-<<<<<<< HEAD
-# APP Setup
+
+# API Setup ##################################################################################################
 app = FastAPI()
+
 app.include_router(minecraft.router,prefix="/minecraft")
 app.include_router(wabisabi.router,prefix="/wabisabi")
 app.include_router(kuraiorg.router,prefix="/kuraiorg")
@@ -26,7 +27,6 @@ app.include_router(al.router,prefix="/al")
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
-=======
 import configparser
 import os
 import re
@@ -42,7 +42,6 @@ for section in config.sections():
     config_values[section][option]= config.get(section,option) 
     
 
->>>>>>> 7ef66f8 (configparser /data /models)
 
 class User(BaseModel):
     id: int
@@ -73,15 +72,8 @@ DATABASE_URL = config_values['database']['database_url']
 engine = create_engine(DATABASE_URL)
 metadata = sqlalchemy.MetaData()
 metadata.reflect(bind=engine)
-
 database = databases.Database(DATABASE_URL)
 
-
-<<<<<<< HEAD
-=======
-# API Setup ##################################################################################################
-app = FastAPI()
->>>>>>> 7ef66f8 (configparser /data /models)
 
 
 @app.get('/')
