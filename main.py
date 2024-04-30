@@ -112,3 +112,6 @@ async def get_user(user_id: int):
 async def create_blogpost(title: str, body: str, ):
     return {"message":"Success"}
 
+@app.post('/modules/morse')
+async def send_morse_message(message):
+    return {'responseCode':"0", "responseMessage":"Success"}
