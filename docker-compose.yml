@@ -1,0 +1,19 @@
+services:
+  kuraiapi:
+    build:
+      context: .  
+      dockerfile: dockerfile
+    ports:
+      # <host_computer_port>:<docker_port>
+      # Docker port should remain the same
+      # Host port in case you are already using 8000 for something else
+      # Map the container's port 8000 to host's port 8000
+      - "8000:8000"
+    environment:
+      # Server IP and Server Port where the Database is accessible to
+      DATABASE_HOST: "192.168.196.13"  # Example external service IP
+      DATABASE_PORT: "5432"  # Example database port
+    volumes:
+      # project data and docker data reference
+      - ./data:/KuraiApi/data  
+
