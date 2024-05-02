@@ -3,6 +3,7 @@ services:
     build:
       context: .  
       dockerfile: dockerfile
+    user: "al"
     ports:
       # <host_computer_port>:<docker_port>
       # Docker port should remain the same
