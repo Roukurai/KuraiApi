@@ -1,6 +1,10 @@
 from fastapi import APIRouter
 router = APIRouter()
 
+from modules import utils
+response = utils.get_response_template()
+
 @router.get('/')
 async def wabisabi_root():
-    return {"message":"Random Animal picture"}
+    response["return"] = {"message":"Random Animal picture"}
+    return response 

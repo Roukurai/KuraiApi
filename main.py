@@ -1,5 +1,8 @@
 from fastapi import FastAPI
-from apis import minecraft, wabisabi,kuraiorg,al
+from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp
+
+from modules import utils
+response = utils.get_response_template()
 
 from pydantic import BaseModel
 from typing import Optional
@@ -20,9 +23,10 @@ app.include_router(minecraft.router,prefix="/minecraft")
 app.include_router(wabisabi.router,prefix="/wabisabi")
 app.include_router(kuraiorg.router,prefix="/kuraiorg")
 app.include_router(al.router,prefix="/al")
+app.include_router(kuraiapp.router,prefix="/kuraiapp")
 
 #templates replace <route>
-# app.include_router(<route>.router,prefix="/<route>")
+# 
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
 # app.include_router(<route>.router,prefix="/<route>")
@@ -30,7 +34,7 @@ app.include_router(al.router,prefix="/al")
 import configparser
 import os
 
-ini = os.path.join(os.path.dirname(__file__),"data",".config")
+ini = os.path.join(utils.get_project_root(),"data",".config")
 config = configparser.ConfigParser()
 config.read(ini)
 config_values= {}
@@ -89,36 +93,44 @@ async def root():
 
 @app.get('/ping')
 async def ping():
-    return {"message": "pong"}
+    response["return"] =  {"message": "pong"}
+    return response
 
 # USER Section
 
 @app.get('/users')
 async def get_users(limit: int | None=None):
     if limit is not None:
-        return {"users": users_list[:limit]}
+        response["return"] = {"users": users_list[:limit]}
+        return response
     else:
-        return {"users": users_list}
-
+        response["return"] = {"users": users_list}
+        return response
 @app.post('/user/create')
 async def create_user(user: User):
     return user
 
 @app.get('/user/{user_id}')
 async def get_user(user_id: int):
-    return {"username":"johndoe","uuid":user_id}
+    response["return"] = {"username":"johndoe","uuid":user_id}
+    return response
 
 @app.post('/blogsite/add')
 async def create_blogpost(title: str, body: str, ):
-    return {"message":"Success"}
+    
+    response["return"] = {""}
+    return response
+
 
 
 @app.get('/modules')
 async def list_modules():
     modules_list = []
-    return {"responseCode":0,"responseMessage":"Success","modules_list": modules_list}
+    response["return"] =  {"modules_list": modules_list}
+    return response
 
 @app.post('/modules/morse')
 async def send_morse_message(message):
     
-    return {'responseCode':0, "responseMessage":"Success"}
+    response["return"] =  {"message":message}
+    return response

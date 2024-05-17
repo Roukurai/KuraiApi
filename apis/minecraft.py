@@ -2,6 +2,9 @@ from fastapi import APIRouter,HTTPException
 from models.minecraft_item import Item,ItemDB
 from modules.database import SessionLocal
 
+from modules import utils
+response = utils.get_response_template()
+
 router = APIRouter()
 
 @router.get('/')
@@ -14,12 +17,14 @@ async def minecraft_root():
             "name": route.name,
         }
         endpoints.append(endpoint_info)
-    return {"message":"Hey! Don't go snooping around my stuff okay?","endpoints":endpoints}
-
+    response["return"] =  {"message":"Hey! Don't go snooping around my stuff okay?","endpoints":endpoints}
+    return response
 
 @router.get('/inventory')
 async def get_inventory():
-    return {"space1":"content","space2":"content","space3":"content","space4":"content","space5":"content"}
+    response["return"] =  {"space1":"content","space2":"content","space3":"content","space4":"content","space5":"content"}
+    return response
+
 
 @router.post('/inventory/add_item')
 async def inventory_add_item(item:Item):
@@ -34,4 +39,5 @@ async def inventory_add_item(item:Item):
     finally:
         db.close()
     
-    return {"message":"Item added Successfully","item_name":item.name,"item_id":item.id,"item_data":item}
+    response["return"] =  {"message":"Item added Successfully","item_name":item.name,"item_id":item.id,"item_data":item}
+    return response

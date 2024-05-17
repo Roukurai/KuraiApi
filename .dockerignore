@@ -1,6 +1,6 @@
 .env
 .venv/
-data/.config
+
 .git/
 .gitignore
 __pycache__/

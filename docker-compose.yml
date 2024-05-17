@@ -16,4 +16,4 @@ services:
       DATABASE_PORT: "5432"  # Example database port
     volumes:
       # project data and docker data reference
-      - ./data:/KuraiApi/data  
+      - .:/KuraiApi
