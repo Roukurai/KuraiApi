@@ -1,0 +1,28 @@
+meta {
+  name: generate-seed
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{LocalApi}}/al/generate_password?length=3
+  body: none
+  auth: none
+}
+
+query {
+  length: 3
+}
+
+auth:basic {
+  username: 
+  password: 
+}
+
+auth:bearer {
+  token: 
+}
+
+body:json {
+  {"length":2}
+}

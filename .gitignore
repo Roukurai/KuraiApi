@@ -22,3 +22,5 @@ build/
 # environment-specific configuration
 .env
 .config
+
+/api-client-data/bruno/LocalAPI/environments/*

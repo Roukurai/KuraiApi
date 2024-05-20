@@ -1,0 +1,52 @@
+meta {
+  name: -app-create-ticket
+  type: http
+  seq: 11
+}
+
+post {
+  url: {{LocalApi}}/kuraiapp/create_ticket
+  body: json
+  auth: none
+}
+
+auth:basic {
+  username: 
+  password: 
+}
+
+auth:bearer {
+  token: 
+}
+
+body:json {
+  {
+    "title": "Test Ticket",
+    "description": "This is a test ticket",
+    "email": "sama@kuraitachi.com"
+  }
+}
+
+body:text {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}
+
+body:xml {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}
+
+body:sparql {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}

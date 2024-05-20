@@ -1,0 +1,35 @@
+meta {
+  name: -minecraft-inventory
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{ _.LocalApi }}/minecraft/inventory/add_item
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  User-Agent: insomnia/8.6.1
+}
+
+auth:basic {
+  username: 
+  password: 
+}
+
+auth:bearer {
+  token: 
+}
+
+body:json {
+  {
+    "id": 422,
+    "name": "Generic Item",
+    "quantity": 20,
+    "inventory_id": 69,
+    "mod_id": "Generic Mod"
+  }
+}
