@@ -3,7 +3,6 @@ from models.ticket import Ticket,TicketDB
 from modules.database import SessionLocal
 
 from modules import utils
-response = utils.get_response_template()
 
 router = APIRouter()
 
@@ -11,7 +10,7 @@ import random
 
 @router.get('/')
 async def kuraiapp_root():
-    response["return"] =  {"message":"You seem to be up and about now!"}
+    response = utils.response({"message":"You seem to be up and about now!"})
     return response
 
 @router.post('/create_ticket')
@@ -29,6 +28,6 @@ async def create_ticket(ticket:Ticket):
     finally:
         db.close()
     
-    response["return"] =  {"response_code":"0000","ticket_number":id}
+    response = utils.response({"response_code":"0000","ticket_number":id})
     return response
 

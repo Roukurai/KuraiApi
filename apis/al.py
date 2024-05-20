@@ -6,33 +6,34 @@ import random
 
 
 from modules import utils
-response = utils.get_response_template()
+
 
 
 @router.get('/')
 async def al_root():
-    return {"message":"It seems you're looking for a friend"}
+    response = utils.response({"message":"It seems you're looking for a friend"})
+    return response
 
 @router.get('/generate_password')
 async def generate_password(length: int = 12):
     chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-'
     password = ''.join(random.choice(chars) for _ in range(length))
-    response["return"] = {"password":password}
+    response = utils.response({"password":password})
     return response
 
 @router.get('/generate_seed')
 async def generate_seed(length: int = 24):
     chars = '0123456789'
     seed = ''.join(random.choice(chars) for _ in range(length))
-    response["return"] = {"seed":seed}
+    response = utils.response({"seed":seed})
     return response
 
 @router.get('/generate_uuid')
 async def generate_uuid():
-    response["return"] = {"uuid":str(uuid4())}
+    response = utils.response({"uuid":str(uuid4())})
     return response
 
 @router.get('/root_directory')
 async def get_root():
-    response["return"] = {"directory":utils.get_project_root()}
+    response = utils.response({"directory":utils.get_project_root()})
     return response

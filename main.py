@@ -2,7 +2,6 @@ from fastapi import FastAPI
 from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp
 
 from modules import utils
-response = utils.get_response_template()
 
 from pydantic import BaseModel
 from typing import Optional
@@ -93,7 +92,7 @@ async def root():
 
 @app.get('/ping')
 async def ping():
-    response["return"] =  {"message": "pong"}
+    response = utils.response({"message": "pong"})
     return response
 
 # USER Section
@@ -101,10 +100,10 @@ async def ping():
 @app.get('/users')
 async def get_users(limit: int | None=None):
     if limit is not None:
-        response["return"] = {"users": users_list[:limit]}
+        response = utils.response({"users": users_list[:limit]})
         return response
     else:
-        response["return"] = {"users": users_list}
+        response = utils.response({"users": users_list})
         return response
 @app.post('/user/create')
 async def create_user(user: User):
@@ -112,13 +111,13 @@ async def create_user(user: User):
 
 @app.get('/user/{user_id}')
 async def get_user(user_id: int):
-    response["return"] = {"username":"johndoe","uuid":user_id}
+    response = utils.response({"username":"johndoe","uuid":user_id})
     return response
 
 @app.post('/blogsite/add')
 async def create_blogpost(title: str, body: str, ):
     
-    response["return"] = {""}
+    response = utils.response({""})
     return response
 
 
@@ -126,11 +125,11 @@ async def create_blogpost(title: str, body: str, ):
 @app.get('/modules')
 async def list_modules():
     modules_list = []
-    response["return"] =  {"modules_list": modules_list}
+    response = utils.response({"modules_list": modules_list})
     return response
 
 @app.post('/modules/morse')
 async def send_morse_message(message):
     
-    response["return"] =  {"message":message}
+    response = utils.response({"message":message})
     return response

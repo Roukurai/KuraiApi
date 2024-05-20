@@ -1,5 +1,7 @@
 {
     "response_code":"0000",
     "response_message": "Success",
+    "response_time":"%H:%M:%S.%f",
+    "response_date":"%Y-%m-%d",
     "return": {}
   }

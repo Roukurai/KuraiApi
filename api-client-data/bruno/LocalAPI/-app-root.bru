@@ -1,0 +1,52 @@
+meta {
+  name: -app-root
+  type: http
+  seq: 14
+}
+
+get {
+  url: {{LocalApi}}/kuraiapp/
+  body: json
+  auth: none
+}
+
+auth:basic {
+  username: 
+  password: 
+}
+
+auth:bearer {
+  token: 
+}
+
+body:json {
+  {
+    "title": "Test Ticket",
+    "description": "This is a test ticket",
+    "email": "sama@kuraitachi.com"
+  }
+}
+
+body:text {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}
+
+body:xml {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}
+
+body:sparql {
+  {
+    "title":"Test Ticket",
+    "description":"This is a test ticket",
+    "email":"sama@kuraitachi.com"
+  }
+}
