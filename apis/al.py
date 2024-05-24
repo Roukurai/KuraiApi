@@ -14,47 +14,38 @@ from modules import utils
 
 @router.get('/')
 async def al_root():
-    response = utils.response({"message":"It seems you're looking for a friend"})
-    return response
+    return utils.response({"message":"It seems you're looking for a friend"})
 
 @router.get('/generate_password')
 async def generate_password(length: int = 12):
     chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+-'
     password = ''.join(random.choice(chars) for _ in range(length))
-    response = utils.response({"password":password})
-    return response
+    return utils.response({"password":password})
 
 @router.get('/generate_seed')
 async def generate_seed(length: int = 24):
     chars = '0123456789'
     seed = ''.join(random.choice(chars) for _ in range(length))
-    response = utils.response({"seed":seed})
-    return response
+    return utils.response({"seed":seed})
 
 @router.get('/generate_uuid')
 async def generate_uuid():
-    response = utils.response({"uuid":str(uuid4())})
-    return response
+    return utils.response({"uuid":str(uuid4())})
 
 @router.get('/generate_quote')
 async def generate_quote():
     text = lorem.paragraph()
-
-    response["return"] = {"quote":text}
-    return response
+    return utils.response({"quote":text})
 
 @router.get('random_last_name')
 async def randomFirstName():
-    response["return"] = {names.get_first_name()}
-    return response
+    return utils.response({names.get_first_name()})
+    
 
 @router.get('random_last_name')
 async def randomLastName():
-    response["return"] = {names.get_last_name()}
-    return response
-
-
+    return utils.response({names.get_last_name()})
+    
 @router.get('/root_directory')
 async def get_root():
-    response = utils.response({"directory":utils.get_project_root()})
-    return response
+    return utils.response({"directory":utils.get_project_root()})
