@@ -37,14 +37,14 @@ async def generate_quote():
     text = lorem.paragraph()
     return utils.response({"quote":text})
 
-@router.get('random_last_name')
+@router.get('/random_first_name')
 async def randomFirstName():
-    return utils.response({names.get_first_name()})
+    return utils.response({"first_name":names.get_first_name()})
     
 
-@router.get('random_last_name')
+@router.get('/random_last_name')
 async def randomLastName():
-    return utils.response({names.get_last_name()})
+    return utils.response({"last_name":names.get_last_name()})
     
 @router.get('/root_directory')
 async def get_root():
