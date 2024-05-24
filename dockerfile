@@ -7,7 +7,9 @@ RUN groupadd -r al && useradd -r -g al al
 WORKDIR /KuraiApi
 
 COPY data/requirements.txt data/requirements.txt
-RUN pip install --no-cache-dir -r data/requirements.txt
+# RUN pip install --no-cache-dir -r data/requirements.txt
+RUN pip install -r data/requirements.txt
+
 
 COPY . .
 RUN chown -R al:al /KuraiApi

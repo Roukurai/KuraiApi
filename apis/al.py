@@ -1,4 +1,7 @@
 from fastapi import APIRouter
+import lorem
+import names
+
 router = APIRouter()
 
 from uuid import uuid4
@@ -32,6 +35,24 @@ async def generate_seed(length: int = 24):
 async def generate_uuid():
     response = utils.response({"uuid":str(uuid4())})
     return response
+
+@router.get('/generate_quote')
+async def generate_quote():
+    text = lorem.paragraph()
+
+    response["return"] = {"quote":text}
+    return response
+
+@router.get('random_last_name')
+async def randomFirstName():
+    response["return"] = {names.get_first_name()}
+    return response
+
+@router.get('random_last_name')
+async def randomLastName():
+    response["return"] = {names.get_last_name()}
+    return response
+
 
 @router.get('/root_directory')
 async def get_root():
