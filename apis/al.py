@@ -2,6 +2,7 @@ from fastapi import APIRouter, HTTPException
 from models.ticket import Ticket,TicketDB
 from modules.database import SessionLocal
 import lorem
+from lorem.text import TextLorem
 import names
 
 router = APIRouter()
@@ -35,9 +36,22 @@ async def generate_uuid():
     return utils.response({"uuid":str(uuid4())})
 
 @router.get('/generate_quote')
-async def generate_quote():
-    text = lorem.paragraph()
+async def generate_quote(mode: str='paragraph'):
+    match mode:
+        case 'paragraph':
+            text = lorem.paragraph()
+        case 'text':    
+            text = lorem.text()
+        case 'sentence':
+            text = lorem.sentence()
+        case 'word':
+            lorem = TextLorem(srange=(2,5))
+            text = lorem.sentence()
+        case _:
+            raise HTTPException(status_code=400, detail='Invalid mode')
+            
     return utils.response({"quote":text})
+
 
 @router.get('/random_first_name')
 async def randomFirstName():
