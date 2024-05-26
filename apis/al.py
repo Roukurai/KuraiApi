@@ -45,8 +45,8 @@ async def generate_quote(mode: str='paragraph'):
         case 'sentence':
             text = lorem.sentence()
         case 'word':
-            lorem = TextLorem(srange=(2,5))
-            text = lorem.sentence()
+            word_lorem = TextLorem(srange=(2,5))
+            text = word_lorem.sentence()
         case _:
             raise HTTPException(status_code=400, detail='Invalid mode')
             
