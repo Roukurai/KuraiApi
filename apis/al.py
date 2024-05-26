@@ -1,4 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
+from models.ticket import Ticket,TicketDB
+from modules.database import SessionLocal
 import lorem
 import names
 
@@ -49,3 +51,20 @@ async def randomLastName():
 @router.get('/root_directory')
 async def get_root():
     return utils.response({"directory":utils.get_project_root()})
+
+@router.post('/submit_ticket')
+async def postSubmitTicket(ticket:Ticket):
+    db = SessionLocal()
+    ticket_item = TicketDB(**ticket.dict())
+    db.add(ticket_item)
+    
+    
+    try:
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500,detail=str(e))
+    finally:
+        db.close()
+    
+    return utils.response({"message":"Ticket submitted correctly aye","ticket_item":ticket})

@@ -8,10 +8,10 @@ class Ticket(BaseModel):
     # id: int
     title: str
     description: str 
-    status: str = "Open"
-    priority: str = "None"
+    status: str = "open"
+    priority: int = 1
     category: str = "General"
-    assignee_id: str = "Unassigned"
+    assignee_id: int = 1
     email: str
     
     @validator('title')
@@ -36,11 +36,11 @@ class Ticket(BaseModel):
     
 class TicketDB(Base):
     __tablename__ = "tickets"
-    id =Column(Integer, primary_key=True,index= True)
+    id =Column(Integer, primary_key=True,index= True,autoincrement=True)
     title = Column(String)
     description = Column(String)
     status = Column(String)
-    priority = Column(String)
+    priority = Column(Integer)
     category = Column(String)
-    assignee_id = Column(String) 
+    assignee_id = Column(Integer) 
     email = Column(String) 
