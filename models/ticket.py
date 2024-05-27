@@ -32,8 +32,6 @@ class Ticket(BaseModel):
             raise ValueError('Email cannot be empty')
         return value
     
-    
-    
 class TicketDB(Base):
     __tablename__ = "tickets"
     id =Column(Integer, primary_key=True,index= True,autoincrement=True)

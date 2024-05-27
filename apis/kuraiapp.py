@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter,HTTPException
 from models.ticket import Ticket,TicketDB
 from modules.database import SessionLocal
 
@@ -12,20 +12,33 @@ import random
 async def kuraiapp_root():
     return utils.response({"message":"You seem to be up and about now!"})
 
-@router.post('/create_ticket')
-async def create_ticket(ticket:Ticket):
+@router.get('/queryTickets')
+async def getQueryTicket(limit: int = 20):
     db = SessionLocal()
-    ticket_entry = TicketDB(**ticket.dict())
-    db.add(ticket_entry)
+    try:
+        ticket_items = db.query(TicketDB).filter(TicketDB.priority==1).limit(limit).all()
+        if ticket_items:
+            ticket_item_array = {ticket_item.id: ticket_item for ticket_item in ticket_items}
+            return utils.response({"qty":len(ticket_item_array),"tickets":ticket_item_array})
+        else:
+            raise HTTPException(status_code=404, detail="No tickets founds")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        db.close()
+    
+@router.post('/submit_ticket')
+async def postSubmitTicket(ticket:Ticket):
+    db = SessionLocal()
+    ticket_item = TicketDB(**ticket.dict())
+    db.add(ticket_item)
+    
     try:
         db.commit()
     except Exception as e:
         db.rollback()
-        error_response = {"response_code":500,"response_message":e,"object":ticket}
-        # raise HTTPException(status_code=500, details=str(e))
-        return error_response
+        raise HTTPException(status_code=500,detail=str(e))
     finally:
         db.close()
     
-    return utils.response({"response_code":"0000","ticket_number":id})
-
+    return utils.response({"message":"Ticket submitted correctly aye","ticket_item":ticket})
