@@ -12,7 +12,7 @@ import serial
 import time
 import re
 
-arduino = serial.Serial(port='/dev/ttyACM0',baudrate=115200)
+# arduino = serial.Serial(port='/dev/ttyACM0',baudrate=115200)
 router = APIRouter()
 
 
