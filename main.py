@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp
+from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp,modules
 
 from modules import utils
 
@@ -23,6 +23,7 @@ app.include_router(wabisabi.router,prefix="/wabisabi")
 app.include_router(kuraiorg.router,prefix="/kuraiorg")
 app.include_router(al.router,prefix="/al")
 app.include_router(kuraiapp.router,prefix="/kuraiapp")
+app.include_router(modules.router,prefix="/modules")
 
 #templates replace <route>
 # 
@@ -122,14 +123,3 @@ async def create_blogpost(title: str, body: str, ):
 
 
 
-@app.get('/modules')
-async def list_modules():
-    modules_list = []
-    response = utils.response({"modules_list": modules_list})
-    return response
-
-@app.post('/modules/morse')
-async def send_morse_message(message):
-    
-    response = utils.response({"message":message})
-    return response

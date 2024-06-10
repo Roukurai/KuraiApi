@@ -16,13 +16,11 @@ async def minecraft_root():
             "name": route.name,
         }
         endpoints.append(endpoint_info)
-    response = utils.response({"message":"Hey! Don't go snooping around my stuff okay?","endpoints":endpoints})
-    return response
+    return utils.response({"message":"Hey! Don't go snooping around my stuff okay?","endpoints":endpoints})
 
 @router.get('/inventory')
 async def get_inventory():
-    response = utils.response({"space1":"content","space2":"content","space3":"content","space4":"content","space5":"content"})
-    return response
+    return utils.response({"space1":"content","space2":"content","space3":"content","space4":"content","space5":"content"})
 
 
 @router.post('/inventory/add_item')
@@ -38,5 +36,4 @@ async def inventory_add_item(item:Item):
     finally:
         db.close()
     
-    response = utils.response({"message":"Item added Successfully","item_name":item.name,"item_id":item.id,"item_data":item})
-    return response
+    return utils.response({"message":"Item added Successfully","item_name":item.name,"item_id":item.id,"item_data":item})

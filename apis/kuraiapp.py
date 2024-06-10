@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-from models.ticket import Ticket,TicketDB
+from fastapi import APIRouter,HTTPException
+from models.event_card import EventCard,EventCardDB
 from modules.database import SessionLocal
 
 from modules import utils
@@ -10,24 +10,35 @@ import random
 
 @router.get('/')
 async def kuraiapp_root():
-    response = utils.response({"message":"You seem to be up and about now!"})
-    return response
+    return utils.response({"message":"You seem to be up and about now!"})
 
-@router.post('/create_ticket')
-async def create_ticket(ticket:Ticket):
+@router.get('/queryEventCard')
+async def getQueryTicket(limit: int = 20):
     db = SessionLocal()
-    ticket_entry = TicketDB(**ticket.dict())
-    db.add(ticket_entry)
+    try:
+        event_card_items = db.query(EventCardDB).filter(EventCardDB.priority==1).limit(limit).all()
+        if event_card_items:
+            event_card_array = {event_card_item.id: event_card_item for event_card_item in event_card_items}
+            return utils.response({"qty":len(event_card_array),"tickets":event_card_array})
+        else:
+            raise HTTPException(status_code=404, detail="No event cards founds")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        db.close()
+    
+@router.post('/submitEventCard')
+async def postSubmitTicket(event_card:EventCard):
+    db = SessionLocal()
+    ticket_item = EventCardDB(**event_card.dict())
+    db.add(ticket_item)
+    
     try:
         db.commit()
     except Exception as e:
         db.rollback()
-        error_response = {"response_code":500,"response_message":e,"object":ticket}
-        # raise HTTPException(status_code=500, details=str(e))
-        return error_response
+        raise HTTPException(status_code=500,detail=str(e))
     finally:
         db.close()
     
-    response = utils.response({"response_code":"0000","ticket_number":id})
-    return response
-
+    return utils.response({"message":"EventCard submitted correctly aye","event_card":event_card})
