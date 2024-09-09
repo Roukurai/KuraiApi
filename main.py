@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp,modules
+from apis import minecraft, wabisabi,kuraiorg,al,kuraiapp,modules,komcas
 
 from modules import utils
 
@@ -24,6 +24,8 @@ app.include_router(kuraiorg.router,prefix="/kuraiorg")
 app.include_router(al.router,prefix="/al")
 app.include_router(kuraiapp.router,prefix="/kuraiapp")
 app.include_router(modules.router,prefix="/modules")
+app.include_router(modules.router,prefix="/komcas")
+
 
 #templates replace <route>
 # 

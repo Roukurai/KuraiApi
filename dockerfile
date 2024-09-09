@@ -21,5 +21,6 @@ USER al
 
 # CMD [ "uvicorn","main:app","--host", "<host_computer_ip>","--port","8000]
 # CMD [ "uvicorn","main:app","--host", "0.0.0.0","--port","8000"]
-CMD ["sh", "-c", "data/setup.sh && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"]
+# CMD ["sh", "-c", "data/setup.sh && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"]
 # CMD [ "uvicorn","main:app"] 
+CMD ["sh","data/setup.sh"]
