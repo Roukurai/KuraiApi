@@ -15,16 +15,10 @@ import re
 # arduino = serial.Serial(port='/dev/ttyACM0',baudrate=115200)
 router = APIRouter()
 
-
-
 @router.get('/')
 async def al_root():
     return utils.response({"message":"It seems you're looking for a friend"})
 
-
-@router.get('/')
-async def al_root():
-    return utils.response({"message":"It seems you're looking for a friend"})
 
 
 @router.get('/modules')
